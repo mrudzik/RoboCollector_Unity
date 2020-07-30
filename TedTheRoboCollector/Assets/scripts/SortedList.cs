@@ -56,8 +56,49 @@ public class SortedList<T> where T:IComparable
     /// <param name="item">item</param>
     public void Add(T item)
     {
-        // add your implementation below
-    }
+		// Just to be sure its clear
+		tempList.Clear();
+		if (items.Count == 0)
+		{// In case if there is no items
+			tempList.Add(item);
+		}
+		else
+		{
+			bool inserted = false;
+			// Find needed position
+			for (var i = 0; i < items.Count; i++)
+			{
+				if (inserted)
+				{// if our item already inserted
+				// just add old items till end
+					tempList.Add(items[i]);
+					continue;
+				}
+				else
+				{
+					if (item.CompareTo(items[i]) == -1)
+					{// if our item is lesser than current obj in list
+					 // just add our item to list
+						tempList.Add(item);
+						inserted = true;
+					}
+					// Just add obj from old list
+					tempList.Add(items[i]);
+				}
+			}
+			if (!inserted)
+			{
+				tempList.Add(item);
+				//inserted = true;
+			}
+		}
+		
+		
+		// Replaces all "items" objects with "tempList" objects
+		items.Clear();
+		items.AddRange(tempList);
+		
+	}
 
     /// <summary>
     /// Removes the item at the given index from the list
@@ -65,7 +106,8 @@ public class SortedList<T> where T:IComparable
     /// <param name="index">index</param>
     public void RemoveAt(int index)
     {
-        // add your implementation below
+		// add your implementation below
+		items.RemoveAt(index);
     }
 
     /// <summary>
@@ -114,7 +156,27 @@ public class SortedList<T> where T:IComparable
     public void Sort()
     {
         items.Sort();
-    }
+		Debug_List();
+	}
 
-    #endregion
+
+
+	#region Debugging
+
+	private void Debug_List()
+	{
+		// Debug Sorting
+		if (items.Count > 0)
+		{
+			for (var i = 0; i < items.Count; i++)
+			{
+				Debug.Log("Item pos " + i + " item " + items[i]);
+			}
+			// Debug.Log("Last in Sorted List is " + items[items.Count - 1]);
+		}
+	}
+
+	#endregion
+
+	#endregion
 }

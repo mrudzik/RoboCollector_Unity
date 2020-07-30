@@ -77,8 +77,22 @@ public class Target : IComparable
     /// <param name="obj">object to compare to</param>
     public int CompareTo(object obj)
     {
-        // replace the code below with your implementation
-        return 0;
+		// replace the code below with your implementation
+		if (obj == null)
+			return 1;
+
+		Target tempTarget = obj as Target;
+		if (tempTarget == null)
+			throw new ArgumentException("Object is not a Target");
+
+
+		// Comparisson
+		if (tempTarget.Distance > Distance)
+			return -1;
+		if (tempTarget.Distance == Distance)
+			return 0;
+		
+		return 1;
     }
 	
     /// <summary>
